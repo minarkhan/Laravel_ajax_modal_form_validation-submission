@@ -14,7 +14,7 @@
 
 
 <div class="container">
-    <h2>Laravel Ajax Validation</h2>
+    {{-- <h2>Laravel Ajax Validation</h2>
 
 
     <div class="alert alert-danger print-error-msg" style="display:none">
@@ -51,7 +51,7 @@
         <div class="form-group">
             <button class="btn btn-success btn-submit">Submit</button>
         </div>
-    </form>
+    </form> --}}
 </div>
 <div class="container">
     <h2>Modal Example</h2>
@@ -62,6 +62,9 @@
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
 
+
+
+
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
@@ -69,7 +72,51 @@
             <h4 class="modal-title">Modal Header</h4>
           </div>
           <div class="modal-body">
-            <p>Some text in the modal.</p>
+            <h2>Laravel Ajax Validation</h2>
+
+
+            {{-- <div class="alert alert-danger print-error-msg" style="display:none">
+                <ul></ul>
+            </div> --}}
+
+            <form>
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label>First Name:</label>
+                    <input type="text" name="first_name" class="form-control" placeholder="First Name">
+                    <div id="first_name_err" class="text-danger error_msg" style="display:none"></div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Last Name:</label>
+                    <input type="text" name="last_name" class="form-control" placeholder="Last Name">
+                    <div id="last_name_err" class="text-danger error_msg" style="display:none"></div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <strong>Email:</strong>
+                    <input type="text" name="email" class="form-control" placeholder="Email">
+                    <div id="email_err" class="text-danger error_msg" style="display:none"></div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <strong>Address:</strong>
+                    <textarea class="form-control" name="address" placeholder="Address"></textarea>
+                    <div id="address_err" class="text-danger error_msg" style="display:none"></div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <button class="btn btn-success btn-submit">Submit</button>
+                </div>
+            </form>
+            {{-- <p>Some text in the modal.</p> --}}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -80,6 +127,7 @@
     </div>
 
   </div>
+
 
 
 <script type="text/javascript">
@@ -104,7 +152,9 @@
                 success: function(data) {
                     if($.isEmptyObject(data.error)){
                         alert(data.success);
+                        window.location.replace(data.url);
                     }else{
+                        console.log(data.error);
                         printErrorMsg(data.error);
                     }
                 }
@@ -115,11 +165,18 @@
 
 
         function printErrorMsg (msg) {
-            $(".print-error-msg").find("ul").html('');
-            $(".print-error-msg").css('display','block');
-            $.each( msg, function( key, value ) {
-                $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
-            });
+            // $(".print-error-msg").find("ul").html('');
+            $(".error_msg").css('display','block');
+            $("#first_name_err").append(msg['first_name']);
+            $("#last_name_err").append(msg['last_name']);
+            $("#email_err").append(msg['email']);
+            $("#address_err").append(msg['address']);
+            // $.each( msg, function( key, value ) {
+            //     $(".print-error-msg").find("ul").append(key+'<li>'+value+'</li>');
+            //     if(key=='first_name'){
+
+            //     }
+            // });
         }
     });
 
