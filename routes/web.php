@@ -23,3 +23,16 @@ Route::post('my-form','HomeController@myformPost');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group( ['prefix' => 'admin', 'middleware' =>['admin', 'auth'], 'namespace'=> 'admin'], function(){
+    Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
+});
+
+Route::group( ['prefix' => 'user', 'middleware' =>['user', 'auth'], 'namespace'=> 'user'], function(){
+    Route::get('dashboard', 'UserController@index')->name('user.dashboard');
+});
+
+Route::group( ['prefix' => 'agent', 'middleware' =>['agent', 'auth'], 'namespace'=> 'agent'], function(){
+    Route::get('dashboard', 'AgentController@index')->name('agent.dashboard');
+});
+

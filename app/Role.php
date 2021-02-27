@@ -5,9 +5,10 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Role;
+use Illuminate\Database\Eloquent\Model;
+use App\User;
 
-class User extends Authenticatable
+class Role extends Model
 {
     use Notifiable;
 
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id'
+        'name', 'id'
     ];
 
     /**
@@ -38,11 +39,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-        // return $this->belongsTo((Role::class))
+    public function user(){
+        return $this->hasMany(User::class);
     }
-
-
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class LoginController extends Controller
 {
@@ -27,6 +28,16 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+
+    protected function redirectTO(){
+        if(auth()->user()->role_id == 1){
+            return route('admin.dashboard');
+        } elseif(auth()->user()->role_id == 2){
+            return route('user.dashboard');
+        } elseif(auth()->user()->role_id == 3){
+            return route('agent.dashboard');
+        }
+    }
 
     /**
      * Create a new controller instance.
